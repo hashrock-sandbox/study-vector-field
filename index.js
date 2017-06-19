@@ -38,7 +38,6 @@ function draw(){
   ctx.fillRect(0, 0, w, h);
   ctx.globalAlpha = 1;
 
-  ctx.strokeStyle = "white"
 
   for(var i = 0; i < items.length; i++){
     var item = items[i]
@@ -51,6 +50,11 @@ function draw(){
     item.vx *= 0.99
     item.vy += rows[iy][ix][1]
     item.vy *= 0.99
+
+    var r = Math.floor(item.vx * 150)
+    var g = Math.floor(item.vx * 80)
+    var b = Math.floor(item.vx * 50)
+    ctx.strokeStyle = `rgb(${r},${g},${b})`
 
     ctx.beginPath();
     ctx.moveTo(item.x, item.y);
