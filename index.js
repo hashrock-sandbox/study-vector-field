@@ -2,16 +2,19 @@ var el = document.getElementById("main")
 var ctx = el.getContext("2d");
 var Conf = function() {
   this.friction = 0.99
-  this.lightness = 10;
+  this.particle = 100
+  this.lightness = 100;
   this.width = 1;
   this.globalAlpha = 1;
   this.compose = false;
-  this.explode = function() {  };
-  // Define render logic ...
+  this.explode = function() {
+    createParticle()
+  };
 };
 
 var conf = new Conf();
 var gui = new dat.GUI();
+gui.add(conf, 'particle', 100, 2000);
 gui.add(conf, 'friction', 0.8, 0.999);
 gui.add(conf, 'lightness', 0.1, 200.0);
 gui.add(conf, 'width', 0.1, 20.0);
@@ -26,14 +29,19 @@ var items = []
 
 noise.seed(Math.random());
 
-for(var i = 0; i < 500; i++){
-  items.push({
-    x: Math.random() * w,
-    y: Math.random() * h,
-    vx: 0,
-    vy: 0,
-  })
+function createParticle(){
+  items = []
+  for(var i = 0; i < conf.particle; i++){
+    items.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: 0,
+      vy: 0,
+    })
+  }
 }
+
+createParticle()
 
 var rows = []
 rows = []
