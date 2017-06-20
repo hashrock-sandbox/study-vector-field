@@ -2,7 +2,9 @@ var el = document.getElementById("main")
 var ctx = el.getContext("2d");
 var Conf = function() {
   this.friction = 0.99
+  this.lightness = 10;
   this.width = 1;
+  this.globalAlpha = 1;
   this.compose = false;
   this.explode = function() {  };
   // Define render logic ...
@@ -11,7 +13,9 @@ var Conf = function() {
 var conf = new Conf();
 var gui = new dat.GUI();
 gui.add(conf, 'friction', 0.8, 0.999);
+gui.add(conf, 'lightness', 0.1, 200.0);
 gui.add(conf, 'width', 0.1, 20.0);
+gui.add(conf, 'globalAlpha', 0.01, 1);
 gui.add(conf, 'compose');
 gui.add(conf, 'explode');
 
@@ -49,7 +53,7 @@ Number.prototype.mod = function(n) {
 
 function draw(){
   //ctx.clearRect(0, 0, w, h);
-  ctx.globalAlpha = 0.1;
+  ctx.globalAlpha = conf.globalAlpha;
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, w, h);
   ctx.globalAlpha = 1;
@@ -69,9 +73,9 @@ function draw(){
     item.vy += rows[iy][ix][1]
     item.vy *= conf.friction
 
-    var r = Math.floor(item.vx * 150)
-    var g = Math.floor(item.vx * 80)
-    var b = Math.floor(item.vx * 50)
+    var r = Math.floor(item.vx * conf.lightness * 15)
+    var g = Math.floor(item.vx * conf.lightness * 8)
+    var b = Math.floor(item.vx * conf.lightness * 5)
     ctx.strokeStyle = `rgb(${r},${g},${b})`
     ctx.lineWidth = conf.width;
 
